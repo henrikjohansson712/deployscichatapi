@@ -1,0 +1,57 @@
+{{- if .Values.ingress.enabled -}}
+{{- $serviceName := include "scichat-loopback.fullname" . -}}
+{{- $servicePort := .Values.service.externalPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $serviceName }}
+  labels:
+    app: {{ include "scichat-loopback.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  {{- if eq .Release.Namespace "production" }}
+  - secretName: scichatservice
+    hosts:
+    - scitest.esss.lu.se
+  rules:
+    - host: scitest.esss.lu.se
+      http:
+        paths:
+          - path: /scichatexplorer
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- else if eq .Release.Namespace "qa"}}
+  - secretName: scichatservice
+    hosts:
+    - scicat07.esss.lu.se
+  rules:
+    - host: scicat07.esss.lu.se
+      http:
+        paths:
+          - path: /scichatexplorer
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- else }}
+  - secretName: scichatservice
+    hosts:
+    - scicat08.esss.lu.se
+  rules:
+    - host: scicat08.esss.lu.se
+      http:
+        paths:
+          - path: /scichatexplorer
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- end }}
+{{- end -}}
