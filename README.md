@@ -1,1 +1,1 @@
-# deployscichatapi
+# Deploy SciChat Api at ESS
