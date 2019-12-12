@@ -8,6 +8,8 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     app: {{ include "scichat-loopback.name" . }}
 data:
+  config.local.js: |-
+{{ .Files.Get "envfiles/config.local.js" | indent 4 }}
   {{- if eq .Release.Namespace "production" }}
   datasources.json: |-
 {{ .Files.Get "envfiles/datasources.production.json" | indent 4 }}
