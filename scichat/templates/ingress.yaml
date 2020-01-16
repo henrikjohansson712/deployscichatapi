@@ -29,6 +29,10 @@ spec:
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+          - path: /scichatapi
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
   {{- else if eq .Release.Namespace "qa"}}
   - secretName: scichatservice
     hosts:
@@ -41,6 +45,10 @@ spec:
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
+          - path: /scichatapi
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
   {{- else }}
   - secretName: scichatservice
     hosts:
@@ -50,6 +58,10 @@ spec:
       http:
         paths:
           - path: /scichatexplorer
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+          - path: /scichatapi
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
