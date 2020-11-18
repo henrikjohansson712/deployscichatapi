@@ -4,7 +4,7 @@
     "connector": "memory"
   },
   "mongo": {
-    "host": "mongodb-production-mongodb",
+    "host": "scicatmdb.esss.lu.se",
     "port": 27017,
     "url": "",
     "database": "scichat",

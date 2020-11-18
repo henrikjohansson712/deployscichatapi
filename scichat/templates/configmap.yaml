@@ -10,14 +10,14 @@ metadata:
 data:
   config.local.js: |-
 {{ .Files.Get "envfiles/config.local.js" | indent 4 }}
-  {{- if eq .Release.Namespace "production" }}
+{{- if eq .Release.Namespace "production" }}
   datasources.json: |-
 {{ .Files.Get "envfiles/datasources.production.json" | indent 4 }}
-  {{- else if eq .Release.Namespace "qa" }}
-  datasources.json: |-
-{{ .Files.Get "envfiles/datasources.qa.json" | indent 4 }}
-  {{- else }}
+{{- else if eq .Release.Namespace "dev" }}
   datasources.json: |-
 {{ .Files.Get "envfiles/datasources.dev.json" | indent 4 }}
-  {{- end }}
+{{- else if eq .Release.Namespace "qa" }}
+  datasources.json: |-
+{{ .Files.Get "envfiles/datasources.qa.json" | indent 4 }}
+{{- end }}
 

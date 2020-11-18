@@ -4,7 +4,7 @@
     "connector": "memory"
   },
   "mongo": {
-    "host": "mongodb-dev-mongodb",
+    "host": "mongodb-dev.dev",
     "port": 27017,
     "url": "",
     "database": "scichat",

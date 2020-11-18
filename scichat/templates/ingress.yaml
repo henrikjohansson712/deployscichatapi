@@ -20,6 +20,22 @@ spec:
   {{- if eq .Release.Namespace "production" }}
   - secretName: scichatservice
     hosts:
+    - scicat.ess.eu
+  rules:
+    - host: scicat.ess.eu
+      http:
+        paths:
+          - path: /scichatexplorer
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+          - path: /scichatapi
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $servicePort }}
+  {{- else if eq .Release.Namespace "dev"}}
+  - secretName: scichatservice
+    hosts:
     - scitest.esss.lu.se
   rules:
     - host: scitest.esss.lu.se
@@ -33,28 +49,12 @@ spec:
             backend:
               serviceName: {{ $serviceName }}
               servicePort: {{ $servicePort }}
-  {{- else if eq .Release.Namespace "qa"}}
+  {{- else }}
   - secretName: scichatservice
     hosts:
     - scicat07.esss.lu.se
   rules:
     - host: scicat07.esss.lu.se
-      http:
-        paths:
-          - path: /scichatexplorer
-            backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
-          - path: /scichatapi
-            backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
-  {{- else }}
-  - secretName: scichatservice
-    hosts:
-    - scicat08.esss.lu.se
-  rules:
-    - host: scicat08.esss.lu.se
       http:
         paths:
           - path: /scichatexplorer
