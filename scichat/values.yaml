@@ -11,7 +11,7 @@ service:
   name: scichat-loopback
   type: ClusterIP
   externalPort: 80
-  internalPort: 3030
+  internalPort: 3000
 
 ingress:
   enabled: true
