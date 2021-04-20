@@ -29,7 +29,7 @@ function docker_tag_exists() {
 
 if docker_tag_exists dacat/scichat-loopback $tag; then
     echo exists
-    helm upgrade scichat-${env} scichat --namespace=${env} --set image.tag=${tag}
+    helm upgrade scichat-${env} scichat --namespace=${env} --set image.tag=${tag} -f scichat/${env}.yaml
     helm history scichat-${env}
     echo "To roll back do: helm rollback --wait --recreate-pods scichat-${env} revision-number"
 else
